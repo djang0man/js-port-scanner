@@ -9,7 +9,7 @@ const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const { helloWorld } = require('./scan-scripts/hello-world');
+const { helloWorld } = require('./scan-scripts');
 
 const jsonParser = bodyParser.json();
 
