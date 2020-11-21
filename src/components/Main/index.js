@@ -189,7 +189,7 @@ const Main = props => {
                       <TableRow key={activePort.port}>
                         <TableCell>{activePort.port}</TableCell>
                         <TableCell>{activePort.status}</TableCell>
-                        <TableCell>{activePort.statusText}</TableCell>
+                        <TableCell>{activePort.responseText}</TableCell>
                       </TableRow>
                     )
                   })}

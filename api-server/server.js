@@ -19,14 +19,14 @@ app.use(cors());
 
 const API_PORT = process.env.API_PORT || 4040;
 
-// async port requester - gets called for each port value
+// async port requester - calls scan script for each port
 async function portRequest(address, port) {
-  const { url, status, statusText } = await helloWorld(address, port);
+  const { url, status, responseText } = await helloWorld(address, port);
   return { 
     port,
     url,
     status,
-    statusText,
+    responseText,
   };
 }
 
@@ -60,9 +60,10 @@ app.post('/scanner', jsonParser, (req, res) => {
     .then(portResults => {
       // loop request results for successes
       portResults.forEach(portResult => {
-        if (portResult.status === 'fulfilled') {
-          const { port, status, statusText, } = portResult.value;
-          openPorts.push({ port, status, statusText, });
+        const { status } = portResult;
+        if (status === 'fulfilled') {
+          const { port, responseText, } = portResult.value;
+          openPorts.push({ port, status, responseText });
         }
       })
       // send open port data to requester
