@@ -16,7 +16,7 @@ To learn more about port scanning in general, to solve a rather complex problem 
 
 setup
 ===
-The following assumes that [Node.js](https://nodejs.org/en/) is installed. The commands should be run from your terminal.
+The following assumes that [Node.js](https://nodejs.org/en/) and [Python 3](https://www.python.org/) are installed. The commands should be run from your terminal.
 
 * Clone down the repository to your machine with:
 > `git clone https://github.com/djang0man/js-port-scanner.git`
