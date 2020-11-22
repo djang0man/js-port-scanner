@@ -54,11 +54,9 @@ app.post('/scanner', jsonParser, (req, res) => {
       // loop request results for successes
       portResults.forEach(portResult => {
         const { status } = portResult;
-        if (status === 'fulfilled') {
-          const { port, responseText, } = portResult.value;
-          if (responseText !== '') {
-            openPorts.push({ port, status, responseText });
-          }
+        const { port, responseText, } = portResult.value;
+        if (status === 'fulfilled' && responseText !== '') {
+          openPorts.push({ port, status, responseText });
         }
       })
       // send open port data to requester
