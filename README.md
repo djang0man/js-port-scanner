@@ -40,4 +40,4 @@ next steps
 
 disclaimer
 ===
-I've completed very limited scanning against real-world IPs... my use of the project is generally tied to the target localhost server that's included (running at 127.0.0.1). Everything should work (in theory) against *actual* web URLs... but don't try it, unless you own those URLs or have permission to do so.
+I've built this for education and I test against local VMs. Everything should work (in theory) against *actual* web IPs... but don't try it (it's illegal), unless you own the IPs or have permission to do so.
