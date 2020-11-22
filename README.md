@@ -36,7 +36,7 @@ notes
 
 next steps
 ===
-* TBD
+* Include options for other scan types (UDP, etc.).
 
 disclaimer
 ===
