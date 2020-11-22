@@ -3,8 +3,6 @@ require('dotenv').config();
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 
-const fetch = require('node-fetch');
-
 const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
