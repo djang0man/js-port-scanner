@@ -1,9 +1,17 @@
 const { execFile } = require('promisify-child-process');
 
-export async function helloWorld(address, port) {
-  const { stdout, stderr } = await execFile(`${__dirname}/hello-world.py`, [address, port], { encoding: 'utf8' });
+export async function helloWorld(ip, port) {
+  const { stdout, stderr } = await execFile(`${__dirname}/hello-world.py`, [ip, port], { encoding: 'utf8' });
   return {
-    url: `${address}:${port}`,
+    address: `${ip}:${port}`,
+    responseText: stdout || stderr
+  }
+}
+
+export async function tcpScan(ip, port) {
+  const { stdout, stderr } = await execFile(`${__dirname}/tcp-scan.py`, [ip, port], { encoding: 'utf8' });
+  return {
+    address: `${ip}:${port}`,
     responseText: stdout || stderr
   }
 }

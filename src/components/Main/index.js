@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 const Main = props => {
   const classes = useStyles();
 
-  const [address, setAddress] = useState('192.168.231.255');
+  const [address, setAddress] = useState('192.168.231.129');
   const handleChangeAddress = e => {
     const value = e.target.value;
     setAddress(value);
@@ -179,7 +179,6 @@ const Main = props => {
                   <TableHead>
                     <TableRow>
                       <TableCell>Port</TableCell>
-                      <TableCell>Status</TableCell>
                       <TableCell>Status Text</TableCell>
                     </TableRow>
                   </TableHead>
@@ -188,7 +187,6 @@ const Main = props => {
                     return (
                       <TableRow key={activePort.port}>
                         <TableCell>{activePort.port}</TableCell>
-                        <TableCell>{activePort.status}</TableCell>
                         <TableCell>{activePort.responseText}</TableCell>
                       </TableRow>
                     )

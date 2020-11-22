@@ -9,7 +9,7 @@ const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const { helloWorld } = require('./scan-scripts');
+const { helloWorld, tcpScan } = require('./scan-scripts');
 
 const jsonParser = bodyParser.json();
 
@@ -20,12 +20,11 @@ app.use(cors());
 const API_PORT = process.env.API_PORT || 4040;
 
 // async port requester - calls scan script for each port
-async function portRequest(address, port) {
-  const { url, status, responseText } = await helloWorld(address, port);
+async function portRequest(ip, port) {
+  const { address, responseText } = await tcpScan(ip, port);
   return { 
     port,
-    url,
-    status,
+    address,
     responseText,
   };
 }
@@ -33,12 +32,6 @@ async function portRequest(address, port) {
 app.post('/scanner', jsonParser, (req, res) => {
   // destructure request values into variables
   const { address, ports, scanWellKnown } = req.body;
-
-  // log requests to std out
-  console.log({
-    headers: req.headers,
-    body: req.body,
-  });
 
   // convert ports body data into clean array
   let parsedPorts = !ports.includes(',') ? [ports.trim()] : ports.split(/[ ,]+/);
@@ -63,7 +56,9 @@ app.post('/scanner', jsonParser, (req, res) => {
         const { status } = portResult;
         if (status === 'fulfilled') {
           const { port, responseText, } = portResult.value;
-          openPorts.push({ port, status, responseText });
+          if (responseText !== '') {
+            openPorts.push({ port, status, responseText });
+          }
         }
       })
       // send open port data to requester
