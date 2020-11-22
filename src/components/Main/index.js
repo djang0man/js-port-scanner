@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 const Main = props => {
   const classes = useStyles();
 
-  const [address, setAddress] = useState('192.168.231.129');
+  const [address, setAddress] = useState('127.0.0.1');
   const handleChangeAddress = e => {
     const value = e.target.value;
     setAddress(value);
