@@ -12,6 +12,8 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import Table from '@material-ui/core/Table';
@@ -33,7 +35,7 @@ const useStyles = makeStyles(theme => ({
 const Main = props => {
   const classes = useStyles();
 
-  const [address, setAddress] = useState('127.0.0.1');
+  const [address, setAddress] = useState('');
   const handleChangeAddress = e => {
     const value = e.target.value;
     setAddress(value);
@@ -48,6 +50,16 @@ const Main = props => {
   const [scanWellKnown, setScanWellKnown] = useState(false);
   const handleScanWellKnown = (enabled=false) => {
     setScanWellKnown(enabled);
+  };
+
+  const [scanRegistered, setScanRegistered] = useState(false);
+  const handleScanRegistered = (enabled=false) => {
+    setScanRegistered(enabled);
+  };
+
+  const [scanEphemeral, setScanEphemeral] = useState(false);
+  const handleScanEphemeral = (enabled=false) => {
+    setScanEphemeral(enabled);
   };
 
   const [awaitingResponse, setAwaitingResponse] = useState(false);
@@ -71,7 +83,7 @@ const Main = props => {
   const handleSubmit = () => {
     const url = `http://${API_URL}:${API_PORT}/scanner`;
     const method = 'POST';
-    const body = JSON.stringify({ address, ports, scanWellKnown, });
+    const body = JSON.stringify({ address, ports, scanWellKnown, scanRegistered, scanEphemeral });
     const headers = { 'content-type': 'application/json', };
 
     const params = {
@@ -101,7 +113,7 @@ const Main = props => {
   const btnDisabled = 
     !isIP(address) ||
     ((!matches(ports, /^[0-9]{1,5}( *,\s* *[0-9]{1,5})*$/) ||
-    ports.split(',').slice(-1)[0] > 65535) && !scanWellKnown);
+    ports.split(',').slice(-1)[0] > 65535) && (!scanWellKnown && !scanRegistered && !scanEphemeral));
 
   return (
     <Box m={2}>
@@ -128,7 +140,7 @@ const Main = props => {
               value={ports}
               margin="normal"
               variant="outlined"
-              label="Port Numbers"
+              label="Specified Ports"
               placeholder="21,80,443"
               helperText="Enter comma-separated valid port numbers."
               onChange={e => handleChangePorts(e)}
@@ -139,20 +151,52 @@ const Main = props => {
               }}
             />
             <Box>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    color="primary"
-                    checked={scanWellKnown}
-                    onChange={() => handleScanWellKnown(!scanWellKnown)}
-                  />
-                }
-                classes={{
-                  label: classes.label
-                }}
-                labelPlacement="end"
-                label="Scan all well-known ports (0-1023)"
-              />
+              <FormControl component="fieldset">
+                  <FormGroup>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          color="primary"
+                          checked={scanWellKnown}
+                          onChange={() => handleScanWellKnown(!scanWellKnown)}
+                        />
+                      }
+                      classes={{
+                        label: classes.label
+                      }}
+                      labelPlacement="end"
+                      label="Scan well-known ports (0-1023)"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          color="primary"
+                          checked={scanRegistered}
+                          onChange={() => handleScanRegistered(!scanRegistered)}
+                        />
+                      }
+                      classes={{
+                        label: classes.label
+                      }}
+                      labelPlacement="end"
+                      label="Scan registered ports (1024-49151)"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          color="primary"
+                          checked={scanEphemeral}
+                          onChange={() => handleScanEphemeral(!scanEphemeral)}
+                        />
+                      }
+                      classes={{
+                        label: classes.label
+                      }}
+                      labelPlacement="end"
+                      label="Scan ephemeral ports (49152-65535)"
+                    />
+                  </FormGroup>
+              </FormControl>
             </Box>
             <Box className={classes.topSpacing}>
               <Button

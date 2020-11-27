@@ -27,20 +27,34 @@ async function portRequest(ip, port) {
   };
 }
 
+const range = (begin, end) =>
+  Array(Math.ceil(end - begin)).fill(begin).map((x, y) => x + y);
+
 app.post('/scanner', jsonParser, (req, res) => {
   // destructure request values into variables
-  const { address, ports, scanWellKnown } = req.body;
+  const { address, ports, scanWellKnown, scanRegistered, scanEphemeral } = req.body;
 
   // convert ports body data into clean array
   let parsedPorts = !ports.includes(',') ? [ports.trim()] : ports.split(/[ ,]+/);
   parsedPorts = parsedPorts.filter(Boolean);
 
   if (scanWellKnown) {
-    // spread in well-known port values
-    parsedPorts = [...parsedPorts, ...Array(1023).keys()].map(String);
-    // filter out duplicates
-    parsedPorts = [...new Set(parsedPorts)];
+    // spread in well-known port range
+    parsedPorts = [...parsedPorts, ...range(0, 1023)].map(String);
   }
+
+  if (scanRegistered) {
+    // spread in registered port range
+    parsedPorts = [...parsedPorts, ...range(1024, 49151)].map(String);
+  }
+
+  if (scanEphemeral) {
+    // spread in ephemeral port range
+    parsedPorts = [...parsedPorts, ...range(49152, 65535)].map(String);
+  }
+
+  // filter out duplicates
+  parsedPorts = [...new Set(parsedPorts)];
 
   // build up requests
   const portRequestPromises = parsedPorts.map(port => portRequest(address, port));
