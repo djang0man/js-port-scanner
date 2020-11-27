@@ -15,3 +15,11 @@ export async function tcpScan(ip, port) {
     responseText: stdout || stderr
   }
 }
+
+export async function udpScan(ip, port) {
+  const { stdout, stderr } = await execFile(`${__dirname}/udp-scan.py`, [ip, port], { encoding: 'utf8' });
+  return {
+    address: `${ip}:${port}`,
+    responseText: stdout || stderr
+  }
+}

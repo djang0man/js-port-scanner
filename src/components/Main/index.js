@@ -35,10 +35,10 @@ const useStyles = makeStyles(theme => ({
 const Main = props => {
   const classes = useStyles();
 
-  const [address, setAddress] = useState('');
-  const handleChangeAddress = e => {
+  const [ip, setIP] = useState('');
+  const handleChangeIP = e => {
     const value = e.target.value;
-    setAddress(value);
+    setIP(value);
   };
 
   const [ports, setPorts] = useState('');
@@ -50,6 +50,11 @@ const Main = props => {
   const [scanWellKnown, setScanWellKnown] = useState(false);
   const handleScanWellKnown = (enabled=false) => {
     setScanWellKnown(enabled);
+  };
+
+  const [scanType, setScanType] = useState('tcp');
+  const handleSetScanType = type => {
+    setScanType(type);
   };
 
   const [scanRegistered, setScanRegistered] = useState(false);
@@ -83,7 +88,7 @@ const Main = props => {
   const handleSubmit = () => {
     const url = `http://${API_URL}:${API_PORT}/scanner`;
     const method = 'POST';
-    const body = JSON.stringify({ address, ports, scanWellKnown, scanRegistered, scanEphemeral });
+    const body = JSON.stringify({ ip, ports, scanType, scanWellKnown, scanRegistered, scanEphemeral });
     const headers = { 'content-type': 'application/json', };
 
     const params = {
@@ -111,7 +116,7 @@ const Main = props => {
   }
 
   const btnDisabled = 
-    !isIP(address) ||
+    !isIP(ip) ||
     ((!matches(ports, /^[0-9]{1,5}( *,\s* *[0-9]{1,5})*$/) ||
     ports.split(',').slice(-1)[0] > 65535) && (!scanWellKnown && !scanRegistered && !scanEphemeral));
 
@@ -123,13 +128,13 @@ const Main = props => {
           <form>
             <TextField
               fullWidth
-              value={address}
+              value={ip}
               margin="normal"
               variant="outlined"
               placeholder="127.0.0.1"
               label="IP Address"
               helperText="Enter the target IP address."
-              onChange={e => handleChangeAddress(e)}
+              onChange={e => handleChangeIP(e)}
               InputProps={{
                 inputProps: {
                   required: true,

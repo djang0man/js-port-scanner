@@ -7,7 +7,7 @@ const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const { helloWorld, tcpScan } = require('./scan-scripts');
+const { tcpScan, udpScan } = require('./scan-scripts');
 
 const jsonParser = bodyParser.json();
 
@@ -18,11 +18,15 @@ app.use(cors());
 const API_PORT = process.env.API_PORT || 4040;
 
 // async port requester - calls scan script for each port
-async function portRequest(ip, port) {
-  const { address, responseText } = await tcpScan(ip, port);
+async function portRequest(ip, port, scanType) {
+  console.log(`Scanning port ${port} on ${ip} with ${scanType}`);
+  const { address, responseText } = scanType === 'tcp' ? await tcpScan(ip, port) : await udpScan(ip, port);
+  if (responseText) console.log(`Found ${port}`);
   return { 
+    ip,
     port,
     address,
+    scanType,
     responseText,
   };
 }
@@ -32,7 +36,7 @@ const range = (begin, end) =>
 
 app.post('/scanner', jsonParser, (req, res) => {
   // destructure request values into variables
-  const { address, ports, scanWellKnown, scanRegistered, scanEphemeral } = req.body;
+  const { ip, ports, scanType, scanWellKnown, scanRegistered, scanEphemeral } = req.body;
 
   // convert ports body data into clean array
   let parsedPorts = !ports.includes(',') ? [ports.trim()] : ports.split(/[ ,]+/);
@@ -57,7 +61,7 @@ app.post('/scanner', jsonParser, (req, res) => {
   parsedPorts = [...new Set(parsedPorts)];
 
   // build up requests
-  const portRequestPromises = parsedPorts.map(port => portRequest(address, port));
+  const portRequestPromises = parsedPorts.map(port => portRequest(ip, port, scanType));
   
   let openPorts = [];
   // handle requests
@@ -66,14 +70,15 @@ app.post('/scanner', jsonParser, (req, res) => {
       // loop request results for successes
       portResults.forEach(portResult => {
         const { status } = portResult;
-        const { port, responseText, } = portResult.value;
+        const { port, address, scanType, responseText, } = portResult.value;
         if (status === 'fulfilled' && responseText !== '') {
-          openPorts.push({ port, status, responseText });
+          openPorts.push({ port, address, scanType, responseText });
         }
       })
-      // send open port data to requester
-      res.send(openPorts);
     })
+    .catch(err => console.error(err))
+    // send open port data to requester
+    .finally(() => res.send(openPorts))
 });
 
 app.listen(API_PORT);
