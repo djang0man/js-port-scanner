@@ -12,10 +12,11 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -53,8 +54,8 @@ const Main = props => {
   };
 
   const [scanType, setScanType] = useState('tcp');
-  const handleSetScanType = type => {
-    setScanType(type);
+  const handleSetScanType = e => {
+    setScanType(e.target.value);
   };
 
   const [scanRegistered, setScanRegistered] = useState(false);
@@ -157,50 +158,56 @@ const Main = props => {
             />
             <Box>
               <FormControl component="fieldset">
-                  <FormGroup>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          color="primary"
-                          checked={scanWellKnown}
-                          onChange={() => handleScanWellKnown(!scanWellKnown)}
-                        />
-                      }
-                      classes={{
-                        label: classes.label
-                      }}
-                      labelPlacement="end"
-                      label="Scan well-known ports (0-1023)"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          color="primary"
-                          checked={scanRegistered}
-                          onChange={() => handleScanRegistered(!scanRegistered)}
-                        />
-                      }
-                      classes={{
-                        label: classes.label
-                      }}
-                      labelPlacement="end"
-                      label="Scan registered ports (1024-49151)"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          color="primary"
-                          checked={scanEphemeral}
-                          onChange={() => handleScanEphemeral(!scanEphemeral)}
-                        />
-                      }
-                      classes={{
-                        label: classes.label
-                      }}
-                      labelPlacement="end"
-                      label="Scan ephemeral ports (49152-65535)"
-                    />
-                  </FormGroup>
+                <FormGroup>
+                  <RadioGroup value={scanType} onChange={handleSetScanType}>
+                    <FormControlLabel value="tcp" control={<Radio />} label="TCP" />
+                    <FormControlLabel value="udp" control={<Radio />} label="UDP" />
+                  </RadioGroup>
+                </FormGroup>
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        color="primary"
+                        checked={scanWellKnown}
+                        onChange={() => handleScanWellKnown(!scanWellKnown)}
+                      />
+                    }
+                    classes={{
+                      label: classes.label
+                    }}
+                    labelPlacement="end"
+                    label="Scan well-known ports (0-1023)"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        color="primary"
+                        checked={scanRegistered}
+                        onChange={() => handleScanRegistered(!scanRegistered)}
+                      />
+                    }
+                    classes={{
+                      label: classes.label
+                    }}
+                    labelPlacement="end"
+                    label="Scan registered ports (1024-49151)"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        color="primary"
+                        checked={scanEphemeral}
+                        onChange={() => handleScanEphemeral(!scanEphemeral)}
+                      />
+                    }
+                    classes={{
+                      label: classes.label
+                    }}
+                    labelPlacement="end"
+                    label="Scan ephemeral ports (49152-65535)"
+                  />
+                </FormGroup>
               </FormControl>
             </Box>
             <Box className={classes.topSpacing}>
