@@ -1,4 +1,4 @@
-Port Scanning with JavaScript
+Port Scanning with JavaScript and Python
 ===
 A research project to learn more about port scanning while attending [Dakota State University](https://dsu.edu).
 
