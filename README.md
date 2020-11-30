@@ -41,7 +41,7 @@ notes
 
 next steps
 ===
-* Include options for other scan types (UDP, etc.).
+* Improve the UI with processing status piped in from the API.
 
 disclaimer
 ===
