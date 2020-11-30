@@ -7,7 +7,7 @@ const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const { tcpScan, udpScan } = require('./scan-scripts');
+const { scanner } = require('./scan-scripts');
 
 const jsonParser = bodyParser.json();
 
@@ -20,7 +20,7 @@ const API_PORT = process.env.API_PORT || 4040;
 // async port requester - calls scan script for each port
 async function portRequest(ip, port, scanType) {
   console.log(`Scanning port ${port} on ${ip} with ${scanType}`);
-  const { address, responseText } = scanType === 'tcp' ? await tcpScan(ip, port) : await udpScan(ip, port);
+  const { address, responseText } = await scanner(ip, port, scanType);
   if (responseText) console.log(`Found ${port}`);
   return { 
     ip,
@@ -44,17 +44,17 @@ app.post('/scanner', jsonParser, (req, res) => {
 
   if (scanWellKnown) {
     // spread in well-known port range
-    parsedPorts = [...parsedPorts, ...range(0, 1023)].map(String);
+    parsedPorts = [...parsedPorts, ...range(0, 1024)].map(String);
   }
 
   if (scanRegistered) {
     // spread in registered port range
-    parsedPorts = [...parsedPorts, ...range(1024, 49151)].map(String);
+    parsedPorts = [...parsedPorts, ...range(1025, 49152)].map(String);
   }
 
   if (scanEphemeral) {
     // spread in ephemeral port range
-    parsedPorts = [...parsedPorts, ...range(49152, 65535)].map(String);
+    parsedPorts = [...parsedPorts, ...range(49152, 65536)].map(String);
   }
 
   // filter out duplicates

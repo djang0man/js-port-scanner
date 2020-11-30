@@ -1,5 +1,6 @@
 deps:
 	npm i
+	pip install -r requirements.txt
 
 clean: clean-lockfile clean-node_modules
 

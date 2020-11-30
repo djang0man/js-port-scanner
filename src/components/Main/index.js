@@ -162,6 +162,7 @@ const Main = props => {
                   <RadioGroup value={scanType} onChange={handleSetScanType}>
                     <FormControlLabel value="tcp" control={<Radio />} label="TCP" />
                     <FormControlLabel value="udp" control={<Radio />} label="UDP" />
+                    <FormControlLabel value="syn" control={<Radio />} label="SYN" />
                   </RadioGroup>
                 </FormGroup>
                 <FormGroup>

@@ -18,10 +18,15 @@ setup
 ===
 The following assumes that [Node.js](https://nodejs.org/en/) and [Python 3](https://www.python.org/) are installed. The commands should be run from your terminal.
 
+* Enable Python CAP_NET_RAW capability for child process sockets utilization:
+> `sudo setcap cap_net_raw=eip /usr/bin/python3.9`
+
 * Clone down the repository to your machine with:
 > `git clone https://github.com/djang0man/js-port-scanner.git`
 
 * cd into the root of the project and enter the command `make deps` to pull dependencies.
+> `make deps`
+
 * Open three terminal windows and enter the following commands (one per window):
 > `make start-api`<br />
 > `make watch-ui`<br />
