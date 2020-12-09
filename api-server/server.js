@@ -49,7 +49,7 @@ app.post('/scanner', jsonParser, (req, res) => {
 
   if (scanRegistered) {
     // spread in registered port range
-    parsedPorts = [...parsedPorts, ...range(1025, 49152)].map(String);
+    parsedPorts = [...parsedPorts, ...range(1024, 49152)].map(String);
   }
 
   if (scanEphemeral) {
