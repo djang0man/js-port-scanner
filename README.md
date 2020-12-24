@@ -35,13 +35,13 @@ The following assumes that [Node.js](https://nodejs.org/en/) and [Python 3](http
 
 notes
 ===
-* Scanning all well-known ports may take some time... be patient!
+* Scanning port ranges may take some time... be patient!
 * The UI validates IP and port values. You can't submit without passing validation :)
-* If you wish to compile the project and host it somewhere, run `make build` to generate the statically compiled assets in the `/build` directory and serve with `make start-ui`.
+* If you wish to compile the project and host it somewhere, run `make build` to generate the statically compiled assets into the `/build` directory and serve with `make start-ui`.
 
 next steps
 ===
-* Improve the UI with processing status piped in from the API.
+* Improve the UI with processing status piped in from the API - perhaps via websockets.
 
 disclaimer
 ===
