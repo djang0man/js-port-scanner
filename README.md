@@ -4,7 +4,7 @@ A research project to learn more about port scanning while attending [Dakota Sta
 
 description
 ===
-This port scanning application features a [React](https://reactjs.org) UI, an [Express](https://expressjs.com/) API. The UI passes address and port selections to the API, which spawns a child process with various python scripts for scaning. Once the async operations are complete for each port, the results are displayed in the UI.
+This port scanning application features a [React](https://reactjs.org) UI, an [Express](https://expressjs.com/) API. The UI passes address and port selections to the API, which spawns a child process with various python scripts for scanning. Once the async operations are complete for each port, the results are displayed in the UI.
 
 general use
 ===
