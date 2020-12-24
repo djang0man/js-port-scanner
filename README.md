@@ -27,7 +27,7 @@ The following assumes that [Node.js](https://nodejs.org/en/) and [Python 3](http
 * cd into the root of the project and enter the command `make deps` to pull dependencies.
 > `make deps`
 
-* Open three terminal windows and enter the following commands (one per window):
+* Open two terminal windows and enter the following commands (one per window):
 > `make start-api`<br />
 > `make watch-ui`<br />
 
