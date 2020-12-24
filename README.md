@@ -8,7 +8,7 @@ This port scanning application features a [React](https://reactjs.org) UI, an [E
 
 general use
 ===
-The user enters an IP address and comma-separated port values and optionally selects whether to scan all well-known port (0-1023).
+The user enters an IP address, comma-separated port values, scan type, and optionally selects whether to scan port groups. 
 
 goals
 ===
