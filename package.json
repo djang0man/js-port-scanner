@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "",
-    "build": "webpack",
     "ui": "node ui-server/index.js",
     "api": "node api-server/index.js",
     "target": "node target-server/index.js",
+    "build": "webpack --config webpack.config.js",
     "watch": "webpack-dev-server --inline --hot --open",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
