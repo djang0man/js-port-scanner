@@ -37,7 +37,7 @@ notes
 ===
 * Scanning port ranges may take some time... be patient!
 * The UI validates IP and port values. You can't submit without passing validation :)
-* If you wish to compile the UI and host it somewhere, run `make build` to generate the compiled assets into the `/build` directory and serve with `make start-ui`. Note that you will still need to run the server with `make start-api` for functionality.
+* If you wish to compile the UI and host it somewhere, run `make build-ui` to generate the compiled assets into the `/build` directory and serve with `make start-ui`. Note that you will still need to run the server with `make start-api` for functionality.
 
 next steps
 ===
