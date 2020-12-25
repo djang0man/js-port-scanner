@@ -18,7 +18,7 @@ setup
 ===
 The following assumes that [Node.js](https://nodejs.org/en/) and [Python 3](https://www.python.org/) are installed. The commands should be run from your terminal.
 
-* Enable Python CAP_NET_RAW capability for child process sockets utilization:
+* Enable Python CAP_NET_RAW capability for child process sockets utilization (command assumes Python 3.9):
 > `sudo setcap cap_net_raw=eip /usr/bin/python3.9`
 
 * Clone down the repository to your machine with:
